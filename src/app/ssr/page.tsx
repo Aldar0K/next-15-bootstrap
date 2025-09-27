@@ -8,7 +8,7 @@ export default async function SSRPage() {
   await new Promise((resolve) => setTimeout(resolve, 1000));
 
   const response = await fetch(
-    "https://jsonplaceholder.typicode.com/todos?_limit=5",
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/todos?_limit=5`,
     {
       cache: "no-store", // Принудительно отключаем кеширование для SSR
     }

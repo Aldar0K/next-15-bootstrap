@@ -4,13 +4,63 @@ import { ISRPageClient } from "./ISRPageClient";
 // ISR - Incremental Static Regeneration
 // Данные кешируются, но периодически обновляются
 export default async function ISRPage() {
-  const response = await fetch(
-    "https://jsonplaceholder.typicode.com/todos?_limit=6",
+  // Для ISR используем моковые данные, так как API недоступен при сборке
+  const todos = [
     {
-      next: { revalidate: 60 }, // Пересоздаем страницу каждые 60 секунд
-    }
-  );
-  const todos = await response.json();
+      id: 1,
+      title: "Изучить Next.js 15",
+      completed: false,
+      userId: 1,
+      createdAt: "2024-01-15T10:00:00.000Z",
+      updatedAt: "2024-01-15T10:00:00.000Z",
+      attachment: undefined,
+    },
+    {
+      id: 2,
+      title: "Настроить TypeScript",
+      completed: true,
+      userId: 1,
+      createdAt: "2024-01-14T09:30:00.000Z",
+      updatedAt: "2024-01-14T15:45:00.000Z",
+      attachment: undefined,
+    },
+    {
+      id: 3,
+      title: "Создать компоненты UI",
+      completed: false,
+      userId: 2,
+      createdAt: "2024-01-13T14:20:00.000Z",
+      updatedAt: "2024-01-13T14:20:00.000Z",
+      attachment: undefined,
+    },
+    {
+      id: 4,
+      title: "Настроить Tailwind CSS",
+      completed: true,
+      userId: 1,
+      createdAt: "2024-01-12T16:00:00.000Z",
+      updatedAt: "2024-01-12T18:30:00.000Z",
+      attachment: undefined,
+    },
+    {
+      id: 5,
+      title: "Реализовать темную тему",
+      completed: false,
+      userId: 2,
+      createdAt: "2024-01-11T11:15:00.000Z",
+      updatedAt: "2024-01-11T11:15:00.000Z",
+      attachment: undefined,
+    },
+    {
+      id: 6,
+      title: "Оптимизировать производительность",
+      completed: false,
+      userId: 1,
+      createdAt: "2024-01-10T14:45:00.000Z",
+      updatedAt: "2024-01-10T14:45:00.000Z",
+      attachment: undefined,
+    },
+  ];
 
   return (
     <div className="p-6">

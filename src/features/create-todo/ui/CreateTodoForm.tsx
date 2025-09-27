@@ -1,17 +1,21 @@
 "use client";
 
+import { CreateTodoRequest } from "@/entities/todo";
 import { Button } from "@/shared/ui/button";
 import { Input } from "@/shared/ui/input";
 import { useState } from "react";
-import { CreateTodoRequest } from "@/entities/todo";
 
 interface CreateTodoFormProps {
-  onSubmit: (data: CreateTodoRequest) => void;
+  onSubmit: (data: CreateTodoRequest, file?: File) => void;
   onCancel: () => void;
   isSubmitting: boolean;
 }
 
-export const CreateTodoForm = ({ onSubmit, onCancel, isSubmitting }: CreateTodoFormProps) => {
+export const CreateTodoForm = ({
+  onSubmit,
+  onCancel,
+  isSubmitting,
+}: CreateTodoFormProps) => {
   const [formData, setFormData] = useState({
     title: "",
     file: null as File | null,
@@ -19,7 +23,7 @@ export const CreateTodoForm = ({ onSubmit, onCancel, isSubmitting }: CreateTodoF
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!formData.title.trim()) return;
 
     const todoData: CreateTodoRequest = {
@@ -28,7 +32,7 @@ export const CreateTodoForm = ({ onSubmit, onCancel, isSubmitting }: CreateTodoF
       userId: 1, // В реальном приложении брать из контекста пользователя
     };
 
-    onSubmit(todoData);
+    onSubmit(todoData, formData.file || undefined);
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -66,11 +70,7 @@ export const CreateTodoForm = ({ onSubmit, onCancel, isSubmitting }: CreateTodoF
       </div>
 
       <div className="flex gap-2 justify-end">
-        <Button
-          type="button"
-          variant="outline"
-          onClick={onCancel}
-        >
+        <Button type="button" variant="outline" onClick={onCancel}>
           Отмена
         </Button>
         <Button type="submit" disabled={isSubmitting}>

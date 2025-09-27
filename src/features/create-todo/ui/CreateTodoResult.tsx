@@ -2,7 +2,7 @@
 
 import { Todo } from "@/entities/todo";
 import { Button } from "@/shared/ui/button";
-import { CheckCircle, Copy, ExternalLink } from "lucide-react";
+import { CheckCircle, Copy } from "lucide-react";
 import { useState } from "react";
 
 interface CreateTodoResultProps {
@@ -26,13 +26,6 @@ export const CreateTodoResult = ({
     } catch (error) {
       console.error("Ошибка при копировании:", error);
     }
-  };
-
-  const handleViewInAPI = () => {
-    window.open(
-      `https://jsonplaceholder.typicode.com/todos/${todo.id}`,
-      "_blank"
-    );
   };
 
   return (
@@ -107,17 +100,25 @@ export const CreateTodoResult = ({
             User ID: {todo.userId}
           </p>
         </div>
-      </div>
 
-      {/* API Link */}
-      <div className="text-center">
-        <button
-          onClick={handleViewInAPI}
-          className="inline-flex items-center gap-2 text-sm text-primary hover:text-primary/80 transition-colors"
-        >
-          <ExternalLink className="w-4 h-4" />
-          Посмотреть в API
-        </button>
+        {todo.attachment && (
+          <div>
+            <label className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
+              Вложение
+            </label>
+            <div className="mt-1 p-2 bg-muted/30 rounded border">
+              <p className="text-sm text-card-foreground font-medium">
+                {todo.attachment.originalName}
+              </p>
+              <p className="text-xs text-muted-foreground">
+                Размер: {(todo.attachment.size / 1024).toFixed(1)} KB
+              </p>
+              <p className="text-xs text-muted-foreground">
+                Тип: {todo.attachment.mimetype}
+              </p>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Actions */}

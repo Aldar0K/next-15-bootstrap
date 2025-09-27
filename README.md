@@ -10,7 +10,7 @@
   - ISR (Incremental Static Regeneration) - инкрементальная регенерация
   - CSR (Client-Side Rendering) - рендеринг на клиенте
 
-- **API интеграция** с jsonplaceholder
+- **API интеграция** с встроенными Next.js API Routes
 - **Модальные окна** с формами (text и file инпуты)
 - **POST запросы** с данными из модальных окон
 - **Feature-Sliced Design** архитектура
@@ -49,6 +49,9 @@ npm start
 ```
 src/
 ├── app/                    # App Router страницы
+│   ├── api/               # API Routes
+│   │   ├── todos/         # API для todos
+│   │   └── files/         # API для файлов
 │   ├── globals.css        # Глобальные стили
 │   ├── layout.tsx         # Корневой layout
 │   ├── page.tsx           # Главная страница
@@ -56,22 +59,49 @@ src/
 │   ├── ssg/               # SSG страница
 │   ├── isr/               # ISR страница
 │   └── csr/               # CSR страница
+├── entities/               # Бизнес-сущности
+│   └── todo/              # Todo сущность
+├── features/               # Фичи
+│   └── create-todo/       # Создание todo
 ├── shared/                # Общие компоненты и утилиты
 │   ├── providers/         # Провайдеры (тема)
 │   ├── ui/                # UI компоненты
 │   └── lib/               # Утилиты
 └── widgets/               # Виджеты (компоненты страниц)
-    ├── header/            # Шапка сайта
-    ├── ssr-page/          # Компонент SSR страницы
-    ├── ssg-page/          # Компонент SSG страницы
-    ├── isr-page/          # Компонент ISR страницы
-    └── csr-page/          # Компонент CSR страницы
+    └── header/            # Шапка сайта
 ```
 
 ## Деплой
 
 Проект готов для деплоя на Vercel:
 
+### 1. Подготовка к деплою
+
+```bash
+# Клонируйте репозиторий
+git clone <your-repo-url>
+cd next-15-bootstrap
+
+# Установите зависимости
+npm install
+
+# Скопируйте файл с переменными окружения
+cp .env.example .env.local
+
+# Отредактируйте .env.local для разработки
+# NEXT_PUBLIC_BASE_URL=http://localhost:3000
+```
+
+### 2. Деплой на Vercel
+
 1. Подключите репозиторий к Vercel
-2. Настройки деплоя будут применены автоматически
-3. Проект будет доступен по ссылке Vercel
+2. В настройках проекта добавьте переменную окружения:
+   - `NEXT_PUBLIC_BASE_URL` = `https://your-domain.vercel.app`
+3. Деплой произойдет автоматически
+
+### 3. Деплой на другие платформы
+
+Для других хостингов (Netlify, Railway, etc.):
+
+- Установите переменную `NEXT_PUBLIC_BASE_URL` в настройках проекта
+- Укажите URL вашего домена

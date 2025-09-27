@@ -23,10 +23,10 @@ export const CreateTodoModal = ({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [createdTodo, setCreatedTodo] = useState<Todo | null>(null);
 
-  const handleSubmit = async (data: CreateTodoRequest) => {
+  const handleSubmit = async (data: CreateTodoRequest, file?: File) => {
     try {
       setIsSubmitting(true);
-      const newTodo = await todoApi.createTodo(data);
+      const newTodo = await todoApi.createTodo(data, file);
 
       console.log("Todo создан:", newTodo);
       setCreatedTodo(newTodo);

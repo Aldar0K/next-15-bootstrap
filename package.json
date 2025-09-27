@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start -p 3000",
     "lint": "eslint",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "dev:api": "echo 'API Routes are built into Next.js - no separate server needed!'"
   },
   "dependencies": {
     "clsx": "^2.0.0",

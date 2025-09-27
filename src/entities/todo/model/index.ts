@@ -1,2 +1,7 @@
 export { todoApi } from "./api";
-export type { Todo, CreateTodoRequest, CreateTodoResponse } from "./types";
+export type {
+  Attachment,
+  CreateTodoRequest,
+  CreateTodoResponse,
+  Todo,
+} from "./types";

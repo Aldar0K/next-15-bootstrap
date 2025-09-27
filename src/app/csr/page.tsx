@@ -38,7 +38,7 @@ export default function CSRPage() {
   };
 
   const handleTodoCreated = (newTodo: Todo) => {
-    setTodos((prev) => [newTodo, ...prev]);
+    setTodos((prev) => [...prev, newTodo]);
   };
 
   return (
