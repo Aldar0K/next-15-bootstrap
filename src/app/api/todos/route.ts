@@ -1,49 +1,9 @@
+import { FALLBACK_TODOS } from "@/shared/constants";
+import { revalidatePages } from "@/shared/lib/revalidation";
 import { NextRequest, NextResponse } from "next/server";
 
 // Имитация базы данных в памяти
-const todos: Array<{
-  id: number;
-  title: string;
-  completed: boolean;
-  userId: number;
-  createdAt: string;
-  updatedAt: string;
-  attachment: {
-    filename: string;
-    originalName: string;
-    size: number;
-    mimetype: string;
-    path: string;
-  } | null;
-}> = [
-  {
-    id: 1,
-    title: "Изучить Next.js 15",
-    completed: false,
-    userId: 1,
-    createdAt: "2024-01-15T10:00:00.000Z",
-    updatedAt: "2024-01-15T10:00:00.000Z",
-    attachment: null,
-  },
-  {
-    id: 2,
-    title: "Настроить TypeScript",
-    completed: true,
-    userId: 1,
-    createdAt: "2024-01-14T09:30:00.000Z",
-    updatedAt: "2024-01-14T15:45:00.000Z",
-    attachment: null,
-  },
-  {
-    id: 3,
-    title: "Создать компоненты UI",
-    completed: false,
-    userId: 2,
-    createdAt: "2024-01-13T14:20:00.000Z",
-    updatedAt: "2024-01-13T14:20:00.000Z",
-    attachment: null,
-  },
-];
+const todos = [...FALLBACK_TODOS];
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
@@ -85,10 +45,13 @@ export async function POST(request: NextRequest) {
             mimetype: file.type,
             path: `/api/files/${file.name}`,
           }
-        : null,
+        : undefined,
     };
 
     todos.push(newTodo);
+
+    // Инвалидируем кеш страниц после создания нового todo
+    revalidatePages();
 
     return NextResponse.json(newTodo, { status: 201 });
   } catch (error) {

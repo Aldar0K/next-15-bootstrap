@@ -17,7 +17,7 @@ export default function CSRPage() {
     const fetchTodos = async () => {
       try {
         setLoading(true);
-        const data = await todoApi.getTodos(8);
+        const data = await todoApi.getTodos(20);
         setTodos(data);
       } catch (error) {
         console.error("Ошибка при загрузке данных:", error);

@@ -1,3 +1,4 @@
+import { getFallbackTodos } from "@/shared/constants";
 import { TimeDisplay } from "@/shared/ui/time-display";
 import { SSRPageClient } from "./SSRPageClient";
 
@@ -7,13 +8,22 @@ export default async function SSRPage() {
   // Имитируем задержку сервера
   await new Promise((resolve) => setTimeout(resolve, 1000));
 
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/todos?_limit=5`,
-    {
-      cache: "no-store", // Принудительно отключаем кеширование для SSR
-    }
-  );
-  const todos = await response.json();
+  let todos;
+
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/todos?_limit=20`,
+      {
+        cache: "no-store", // Принудительно отключаем кеширование для SSR
+        next: { tags: ["todos"] }, // Тег для инвалидации
+      }
+    );
+    todos = await response.json();
+  } catch {
+    // Fallback данные для сборки
+    console.log("API недоступен при сборке, используем fallback данные");
+    todos = getFallbackTodos(10);
+  }
 
   return (
     <div className="p-6">
