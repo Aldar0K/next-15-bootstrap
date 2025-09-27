@@ -2,6 +2,7 @@
 
 import { Todo, TodoList, todoApi } from "@/entities/todo";
 import { CreateTodoButton } from "@/features/create-todo";
+import { TimeDisplay } from "@/shared/ui/time-display";
 import { useEffect, useState } from "react";
 
 // CSR - Client-Side Rendering
@@ -36,9 +37,9 @@ export default function CSRPage() {
     );
   };
 
-  // const handleTodoCreated = (newTodo: Todo) => {
-  //   setTodos((prev) => [newTodo, ...prev]);
-  // };
+  const handleTodoCreated = (newTodo: Todo) => {
+    setTodos((prev) => [newTodo, ...prev]);
+  };
 
   return (
     <div className="p-6">
@@ -48,15 +49,13 @@ export default function CSRPage() {
           <p className="text-muted-foreground">
             Данные загружаются на клиенте после рендеринга страницы
           </p>
-          <p className="text-sm text-muted-foreground">
-            Время загрузки страницы: {new Date().toLocaleTimeString("ru-RU")}
-          </p>
+          <TimeDisplay label="Время загрузки страницы" />
         </div>
 
         <div className="space-y-4">
           <div className="flex justify-between items-center">
             <h2 className="text-xl font-semibold">Список задач (CSR)</h2>
-            <CreateTodoButton />
+            <CreateTodoButton onTodoCreated={handleTodoCreated} />
           </div>
 
           <TodoList todos={todos} onToggle={toggleTodo} loading={loading} />

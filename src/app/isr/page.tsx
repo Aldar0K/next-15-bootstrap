@@ -1,3 +1,4 @@
+import { TimeDisplay } from "@/shared/ui/time-display";
 import { ISRPageClient } from "./ISRPageClient";
 
 // ISR - Incremental Static Regeneration
@@ -21,10 +22,7 @@ export default async function ISRPage() {
           <p className="text-muted-foreground">
             Данные кешируются, но периодически обновляются (каждые 60 сек)
           </p>
-          <p className="text-sm text-muted-foreground">
-            Время последнего обновления:{" "}
-            {new Date().toLocaleTimeString("ru-RU")}
-          </p>
+          <TimeDisplay label="Время последнего обновления" />
         </div>
 
         <ISRPageClient todos={todos} />

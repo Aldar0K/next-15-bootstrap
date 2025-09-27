@@ -1,3 +1,4 @@
+import { TimeDisplay } from "@/shared/ui/time-display";
 import { SSRPageClient } from "./SSRPageClient";
 
 // SSR - Server-Side Rendering
@@ -22,9 +23,7 @@ export default async function SSRPage() {
           <p className="text-muted-foreground">
             Данные загружаются на сервере при каждом запросе
           </p>
-          <p className="text-sm text-muted-foreground">
-            Время генерации: {new Date().toLocaleTimeString("ru-RU")}
-          </p>
+          <TimeDisplay label="Время генерации" />
         </div>
 
         <SSRPageClient todos={todos} />

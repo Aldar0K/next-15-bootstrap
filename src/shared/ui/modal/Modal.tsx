@@ -2,7 +2,7 @@
 
 import { cn } from "@/shared/lib/utils";
 import { X } from "lucide-react";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface ModalProps {
   isOpen: boolean;
@@ -20,6 +20,7 @@ export const Modal = ({
   className,
 }: ModalProps) => {
   const modalRef = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
@@ -29,8 +30,13 @@ export const Modal = ({
     };
 
     if (isOpen) {
+      setIsVisible(true);
       document.addEventListener("keydown", handleEscape);
       document.body.style.overflow = "hidden";
+    } else {
+      setIsVisible(false);
+      document.removeEventListener("keydown", handleEscape);
+      document.body.style.overflow = "unset";
     }
 
     return () => {
@@ -44,14 +50,20 @@ export const Modal = ({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       <div
-        className="fixed inset-0 bg-black/50"
+        className={cn(
+          "fixed inset-0 bg-black/50 transition-opacity duration-300",
+          isVisible ? "opacity-100" : "opacity-0"
+        )}
         onClick={onClose}
         aria-hidden="true"
       />
       <div
         ref={modalRef}
         className={cn(
-          "relative bg-card border border-border rounded-lg shadow-lg max-w-md w-full mx-4",
+          "relative bg-card border border-border rounded-lg shadow-lg max-w-md w-full mx-4 transition-all duration-300 transform",
+          isVisible
+            ? "opacity-100 scale-100 translate-y-0"
+            : "opacity-0 scale-95 translate-y-4",
           className
         )}
       >

@@ -1,3 +1,4 @@
+import { TimeDisplay } from "@/shared/ui/time-display";
 import { SSGPageClient } from "./SSGPageClient";
 
 // SSG - Static Site Generation
@@ -19,9 +20,7 @@ export default async function SSGPage() {
           <p className="text-muted-foreground">
             Данные загружаются на этапе сборки и кешируются
           </p>
-          <p className="text-sm text-muted-foreground">
-            Время сборки: {new Date().toLocaleTimeString("ru-RU")}
-          </p>
+          <TimeDisplay label="Время сборки" />
         </div>
 
         <SSGPageClient todos={todos} />

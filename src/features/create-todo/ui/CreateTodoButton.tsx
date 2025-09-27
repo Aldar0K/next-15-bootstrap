@@ -1,10 +1,15 @@
 "use client";
 
+import { Todo } from "@/entities/todo";
 import { Button } from "@/shared/ui/button";
 import { useState } from "react";
 import { CreateTodoModal } from "./CreateTodoModal";
 
-export const CreateTodoButton = () => {
+interface CreateTodoButtonProps {
+  onTodoCreated?: (todo: Todo) => void;
+}
+
+export const CreateTodoButton = ({ onTodoCreated }: CreateTodoButtonProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
@@ -14,6 +19,7 @@ export const CreateTodoButton = () => {
       <CreateTodoModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
+        onTodoCreated={onTodoCreated}
       />
     </>
   );
